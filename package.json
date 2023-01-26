@@ -23,6 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@brazilian-utils/brazilian-utils": "^1.0.0-rc.12",
     "@prisma/client": "^4.9.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",

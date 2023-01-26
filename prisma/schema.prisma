@@ -81,6 +81,7 @@ model product {
   name        String   @unique
   description String
   price       Int
+  inStock     Int
   categoryId  Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
