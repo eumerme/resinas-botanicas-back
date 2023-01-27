@@ -26,6 +26,7 @@ describe("GET /products", () => {
       {
         id: expect.any(Number),
         name: product.name,
+        mainImage: product.mainImage,
         description: product.description,
         price: product.price,
         inStock: product.inStock,

@@ -70,8 +70,10 @@ CREATE TABLE "category" (
 CREATE TABLE "product" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "mainImage" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
+    "inStock" INTEGER NOT NULL,
     "categoryId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -110,6 +112,9 @@ CREATE UNIQUE INDEX "category_name_key" ON "category"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "product_name_key" ON "product"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "product_mainImage_key" ON "product"("mainImage");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "image_url_key" ON "image"("url");

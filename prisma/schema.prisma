@@ -79,6 +79,7 @@ model category {
 model product {
   id          Int      @id @default(autoincrement())
   name        String   @unique
+  mainImage   String   @unique
   description String
   price       Int
   inStock     Int
