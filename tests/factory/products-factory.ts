@@ -12,5 +12,6 @@ export async function createProduct(categoryId: number): Promise<product> {
       inStock: faker.datatype.number({ min: 0 }),
       categoryId,
     },
+    include: { category: true },
   });
 }

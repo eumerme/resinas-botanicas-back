@@ -26,14 +26,18 @@ describe("GET /products", () => {
       {
         id: expect.any(Number),
         name: product.name,
-        mainImage: product.mainImage,
+        image: product.mainImage,
         description: product.description,
         price: product.price,
         inStock: product.inStock,
-        categoryId: category.id,
-        createdAt: expect.any(String),
-        updatedAt: expect.any(String),
+        category: category.name,
       },
     ]);
+  });
+
+  it("should respond with an empty array when there are no products", async () => {
+    const response = await server.get("/products");
+
+    expect(response.body).toEqual([]);
   });
 });
