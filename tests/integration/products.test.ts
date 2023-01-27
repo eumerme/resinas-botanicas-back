@@ -19,16 +19,19 @@ describe("GET /products", () => {
     const category = await createCategory();
     const product = await createProduct(category.id);
 
-    const response = await server.post("/products");
+    const response = await server.get("/products");
 
     expect(response.status).toEqual(httpStatus.OK);
     expect(response.body).toEqual([
       {
+        id: expect.any(Number),
         name: product.name,
         description: product.description,
         price: product.price,
         inStock: product.inStock,
         categoryId: category.id,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
       },
     ]);
   });
