@@ -1,5 +1,4 @@
-import { notFoundError } from "../errors";
-import * as categoriesRepository from "../repositories";
+import { categoriesRepository } from "../repositories/categories-repository";
 
 export async function listCategories() {
   const categories = await categoriesRepository.findMany();
@@ -8,14 +7,4 @@ export async function listCategories() {
     id: c.id,
     name: c.name,
   }));
-}
-
-export async function listProductsByCategoryId(id: number) {
-  const categoryExists = await categoriesRepository.findById(id);
-
-  if (!categoryExists) throw notFoundError();
-
-  const categoryWithProducts = await categoriesRepository.findProductsByCategoryId(id);
-
-  return categoryWithProducts;
 }

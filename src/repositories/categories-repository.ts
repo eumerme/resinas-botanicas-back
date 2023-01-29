@@ -10,9 +10,4 @@ export async function findById(id: number) {
   });
 }
 
-export async function findProductsByCategoryId(id: number) {
-  return prisma.category.findFirst({
-    where: { id },
-    include: { product: true },
-  });
-}
+export const categoriesRepository = { findMany, findById };

@@ -1,5 +1,6 @@
 import { notFoundError } from "../errors";
-import * as productsRepository from "../repositories";
+import { productsRepository } from "../repositories/products-repository";
+import { categoriesRepository } from "../repositories/categories-repository";
 
 export async function listProducts(): Promise<LatestProducts[]> {
   const products = await productsRepository.findLatestProducts();
@@ -27,6 +28,15 @@ export async function listProductById(id: number): Promise<ProductDetailResponse
     price: product.price,
     inStock: product.inStock,
   };
+}
+
+export async function listProductsByCategoryId(id: number) {
+  const categoryExists = await categoriesRepository.findById(id);
+  if (!categoryExists) throw notFoundError();
+
+  const products = await productsRepository.findProductsByCategoryId(id);
+
+  return products;
 }
 
 type ProductDetailResponse = {
