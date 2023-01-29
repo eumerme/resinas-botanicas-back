@@ -36,36 +36,52 @@ describe("GET /categories", () => {
   });
 });
 
-describe("GET /category/:id/products", () => {
+describe("GET /categories/:id/products", () => {
   it("should respond with status 200 and the products of the chosen category", async () => {
     const category = await createCategory();
     const product = await createProduct(category.id);
 
-    const response = await server.get(`/category/${category.id}/products`);
+    const response = await server.get(`/categories/${category.id}/products`);
 
     expect(response.status).toEqual(httpStatus.OK);
-    expect(response.body).toEqual([
-      {
-        id: expect.any(Number),
-        name: product.name,
-        image: product.mainImage,
-        price: product.price,
-        inStock: product.inStock,
-      },
-    ]);
+    expect(response.body).toEqual({
+      id: category.id,
+      name: category.name,
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
+      product: [
+        {
+          id: expect.any(Number),
+          name: product.name,
+          description: product.description,
+          mainImage: product.mainImage,
+          price: product.price,
+          inStock: product.inStock,
+          categoryId: category.id,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        },
+      ],
+    });
+  });
+
+  it("should respond with category data and an empty array when there is no product of the chosen category", async () => {
+    const category = await createCategory();
+
+    const response = await server.get(`/categories/${category.id}/products`);
+
+    expect(response.body).toEqual({
+      id: category.id,
+      name: category.name,
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
+      product: [],
+    });
   });
 
   it("should respond with status 404 if the category doesn't exist", async () => {
-    const response = await server.get("/category/0/products");
+    const response = await server.get("/categories/0/products");
 
     expect(response.status).toEqual(httpStatus.NOT_FOUND);
-  });
-
-  it("should respond with an empty array when there is no product of the chosen category", async () => {
-    const category = await createCategory();
-
-    const response = await server.get(`/category/${category.id}/products`);
-
-    expect(response.status).toEqual([]);
   });
 });
