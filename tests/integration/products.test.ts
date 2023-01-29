@@ -14,12 +14,12 @@ beforeEach(async () => {
 
 const server = supertest(app);
 
-describe("GET /products", () => {
+describe("GET /products/home", () => {
   it("should respond with status 200 and the 10 most recent products", async () => {
     const category = await createCategory();
     const product = await createProduct(category.id);
 
-    const response = await server.get("/products");
+    const response = await server.get("/products/home");
 
     expect(response.status).toEqual(httpStatus.OK);
     expect(response.body).toEqual([
@@ -27,17 +27,41 @@ describe("GET /products", () => {
         id: expect.any(Number),
         name: product.name,
         image: product.mainImage,
-        description: product.description,
         price: product.price,
         inStock: product.inStock,
-        category: category.name,
       },
     ]);
   });
 
   it("should respond with an empty array when there are no products", async () => {
-    const response = await server.get("/products");
+    const response = await server.get("/products/home");
 
     expect(response.body).toEqual([]);
+  });
+});
+
+describe("GET /products/id/:id", () => {
+  it("should respond with status 200 and product detail", async () => {
+    const category = await createCategory();
+    const product = await createProduct(category.id);
+
+    const response = await server.get(`/products/id/${product.id}`);
+
+    expect(response.status).toEqual(httpStatus.OK);
+    expect(response.body).toEqual({
+      id: expect.any(Number),
+      name: product.name,
+      image: product.mainImage,
+      description: product.description,
+      price: product.price,
+      inStock: product.inStock,
+      category: category.name,
+    });
+  });
+
+  it("should respond with status 404 if the product doesn't exist", async () => {
+    const response = await server.get("/products/id/0");
+
+    expect(response.status).toEqual(httpStatus.NOT_FOUND);
   });
 });
