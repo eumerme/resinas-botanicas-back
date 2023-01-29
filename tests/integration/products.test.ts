@@ -40,12 +40,12 @@ describe("GET /products/home", () => {
   });
 });
 
-describe("GET /products/id/:id", () => {
+describe("GET /products/:id", () => {
   it("should respond with status 200 and product detail", async () => {
     const category = await createCategory();
     const product = await createProduct(category.id);
 
-    const response = await server.get(`/products/id/${product.id}`);
+    const response = await server.get(`/products/${product.id}`);
 
     expect(response.status).toEqual(httpStatus.OK);
     expect(response.body).toEqual({
@@ -60,7 +60,7 @@ describe("GET /products/id/:id", () => {
   });
 
   it("should respond with status 404 if the product doesn't exist", async () => {
-    const response = await server.get("/products/id/0");
+    const response = await server.get("/products/0");
 
     expect(response.status).toEqual(httpStatus.NOT_FOUND);
   });
