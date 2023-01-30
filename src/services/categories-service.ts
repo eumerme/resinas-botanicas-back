@@ -1,6 +1,6 @@
-import { categoriesRepository } from "../repositories/categories-repository";
+import { categoriesRepository } from "../repositories";
 
-export async function listCategories() {
+export async function listCategories(): Promise<Categories[]> {
   const categories = await categoriesRepository.findMany();
 
   return categories.map((c) => ({
@@ -8,3 +8,10 @@ export async function listCategories() {
     name: c.name,
   }));
 }
+
+type Categories = {
+  id: number;
+  name: string;
+};
+
+export const categoriesService = { listCategories };

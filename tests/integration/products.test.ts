@@ -79,12 +79,9 @@ describe("GET /products/category/:id", () => {
         id: expect.any(Number),
         name: product.name,
         description: product.description,
-        mainImage: product.mainImage,
+        image: product.mainImage,
         price: product.price,
         inStock: product.inStock,
-        categoryId: category.id,
-        createdAt: expect.any(String),
-        updatedAt: expect.any(String),
       },
     ]);
   });

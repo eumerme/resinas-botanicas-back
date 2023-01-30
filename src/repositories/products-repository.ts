@@ -20,7 +20,7 @@ async function findOne(id: number): Promise<ProductDetail> {
 
 async function findProductsByCategoryId(id: number) {
   return prisma.product.findMany({
-    where: { category: { id } },
+    where: { categoryId: id },
   });
 }
 

@@ -2,7 +2,7 @@ import "express-async-errors";
 import express, { Express } from "express";
 import cors from "cors";
 import { loadEnv, connectDb, disconnectDB } from "./config";
-import { productsRouter, categoriesRouter } from "./routers";
+import { productsRouter, categoriesRouter, usersRouter } from "./routers";
 
 loadEnv();
 
@@ -12,7 +12,8 @@ app
   .use(express.json())
   .get("/health", (_req, res) => res.send("OK!"))
   .use("/products", productsRouter)
-  .use("/categories", categoriesRouter);
+  .use("/categories", categoriesRouter)
+  .use("/users", usersRouter);
 
 export function init(): Promise<Express> {
   connectDb();

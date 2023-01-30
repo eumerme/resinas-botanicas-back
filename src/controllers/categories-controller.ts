@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import * as categoriesService from "../services";
+import { categoriesService } from "../services";
 
 export async function getCategories(req: Request, res: Response) {
   try {

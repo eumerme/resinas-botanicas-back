@@ -1,8 +1,7 @@
 import { notFoundError } from "../errors";
-import { productsRepository } from "../repositories/products-repository";
-import { categoriesRepository } from "../repositories/categories-repository";
+import { categoriesRepository, productsRepository } from "../repositories";
 
-export async function listProducts(): Promise<LatestProducts[]> {
+async function listProducts(): Promise<LatestProducts[]> {
   const products = await productsRepository.findLatestProducts();
 
   return products.map((p) => ({
@@ -14,7 +13,7 @@ export async function listProducts(): Promise<LatestProducts[]> {
   }));
 }
 
-export async function listProductById(id: number): Promise<ProductDetailResponse> {
+async function listProductById(id: number): Promise<ProductDetailResponse> {
   const product = await productsRepository.findOne(id);
 
   if (!product) throw notFoundError();
@@ -30,13 +29,20 @@ export async function listProductById(id: number): Promise<ProductDetailResponse
   };
 }
 
-export async function listProductsByCategoryId(id: number) {
+async function listProductsByCategoryId(id: number) {
   const categoryExists = await categoriesRepository.findById(id);
   if (!categoryExists) throw notFoundError();
 
   const products = await productsRepository.findProductsByCategoryId(id);
 
-  return products;
+  return products.map((product) => ({
+    id: product.id,
+    name: product.name,
+    image: product.mainImage,
+    description: product.description,
+    price: product.price,
+    inStock: product.inStock,
+  }));
 }
 
 type ProductDetailResponse = {
@@ -50,3 +56,5 @@ type ProductDetailResponse = {
 };
 
 type LatestProducts = Omit<ProductDetailResponse, "description" | "category">;
+
+export const productsService = { listProducts, listProductById, listProductsByCategoryId };

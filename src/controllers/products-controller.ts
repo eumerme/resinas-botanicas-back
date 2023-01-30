@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import * as productsService from "../services";
+import { productsService } from "../services";
 
 export async function getProducts(req: Request, res: Response) {
   try {
