@@ -18,13 +18,13 @@ async function findOne(id: number): Promise<ProductDetail> {
   });
 }
 
-async function findProductsByCategoryId(id: number) {
+async function findProductsByCategoryId(id: number): Promise<product[]> {
   return prisma.product.findMany({
     where: { categoryId: id },
   });
 }
 
-type ProductDetail = product & {
+export type ProductDetail = product & {
   category: category;
 };
 

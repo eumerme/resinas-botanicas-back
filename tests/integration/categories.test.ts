@@ -25,6 +25,8 @@ describe("GET api/categories", () => {
       {
         id: expect.any(Number),
         name: category.name,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
       },
     ]);
   });

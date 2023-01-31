@@ -26,9 +26,13 @@ describe("GET /api/products/home", () => {
       {
         id: expect.any(Number),
         name: product.name,
-        image: product.mainImage,
+        description: product.description,
+        mainImage: product.mainImage,
         price: product.price,
         inStock: product.inStock,
+        categoryId: category.id,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
       },
     ]);
   });
@@ -51,11 +55,19 @@ describe("GET /api/products/:id", () => {
     expect(response.body).toEqual({
       id: expect.any(Number),
       name: product.name,
-      image: product.mainImage,
       description: product.description,
+      mainImage: product.mainImage,
       price: product.price,
       inStock: product.inStock,
-      category: category.name,
+      categoryId: category.id,
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
+      category: {
+        id: category.id,
+        name: category.name,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
+      },
     });
   });
 
@@ -79,9 +91,12 @@ describe("GET /api/products/category/:id", () => {
         id: expect.any(Number),
         name: product.name,
         description: product.description,
-        image: product.mainImage,
+        mainImage: product.mainImage,
         price: product.price,
         inStock: product.inStock,
+        categoryId: category.id,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
       },
     ]);
   });
@@ -94,9 +109,15 @@ describe("GET /api/products/category/:id", () => {
     expect(response.body).toEqual([]);
   });
 
-  it("should respond with status 404 if the category doesn't exist", async () => {
+  it("should respond with status 404 if the category is not valid", async () => {
     const response = await server.get("/api/categories/0/products");
 
     expect(response.status).toEqual(httpStatus.NOT_FOUND);
+  });
+
+  it("should respond with status 404 when category id is not given", async () => {
+    const response = await server.post("/api/categories/products");
+
+    expect(response.status).toBe(httpStatus.NOT_FOUND);
   });
 });

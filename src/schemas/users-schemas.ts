@@ -1,4 +1,5 @@
 import { isValidCPF, isValidPhone } from "@brazilian-utils/brazilian-utils";
+import { user } from "@prisma/client";
 import Joi from "joi";
 
 export const signupSchema = Joi.object<signup>({
@@ -36,14 +37,6 @@ function joiPhoneValidation(value: string, helpers: Joi.CustomHelpers<string>) {
   return value;
 }
 
-type signup = {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  cpf: string;
-  birthday: Date;
-  phone: string;
-};
+type signup = Omit<user, "createdAt" | "updatedAt"> & { confirmPassword: string };
 
-type signin = { email: string; password: string };
+type signin = Pick<user, "email" | "password">;

@@ -1,60 +1,23 @@
+import { product } from "@prisma/client";
 import { notFoundError } from "../errors";
-import { categoriesRepository, productsRepository } from "../repositories";
+import { categoriesRepository, ProductDetail, productsRepository } from "../repositories";
 
-async function listProducts(): Promise<LatestProducts[]> {
-  const products = await productsRepository.findLatestProducts();
-
-  return products.map((p) => ({
-    id: p.id,
-    name: p.name,
-    image: p.mainImage,
-    price: p.price,
-    inStock: p.inStock,
-  }));
+async function listProducts(): Promise<product[]> {
+  return productsRepository.findLatestProducts();
 }
 
-async function listProductById(id: number): Promise<ProductDetailResponse> {
+async function listProductById(id: number): Promise<ProductDetail> {
   const product = await productsRepository.findOne(id);
-
   if (!product) throw notFoundError();
 
-  return {
-    id: product.id,
-    name: product.name,
-    image: product.mainImage,
-    description: product.description,
-    category: product.category.name,
-    price: product.price,
-    inStock: product.inStock,
-  };
+  return product;
 }
 
-async function listProductsByCategoryId(id: number) {
+async function listProductsByCategoryId(id: number): Promise<product[]> {
   const categoryExists = await categoriesRepository.findById(id);
   if (!categoryExists) throw notFoundError();
 
-  const products = await productsRepository.findProductsByCategoryId(id);
-
-  return products.map((product) => ({
-    id: product.id,
-    name: product.name,
-    image: product.mainImage,
-    description: product.description,
-    price: product.price,
-    inStock: product.inStock,
-  }));
+  return productsRepository.findProductsByCategoryId(id);
 }
-
-type ProductDetailResponse = {
-  id: number;
-  name: string;
-  image: string;
-  description: string;
-  category: string;
-  price: number;
-  inStock: number;
-};
-
-type LatestProducts = Omit<ProductDetailResponse, "description" | "category">;
 
 export const productsService = { listProducts, listProductById, listProductsByCategoryId };

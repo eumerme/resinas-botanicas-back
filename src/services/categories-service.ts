@@ -1,17 +1,8 @@
+import { category } from "@prisma/client";
 import { categoriesRepository } from "../repositories";
 
-export async function listCategories(): Promise<Categories[]> {
-  const categories = await categoriesRepository.findMany();
-
-  return categories.map((c) => ({
-    id: c.id,
-    name: c.name,
-  }));
+export async function listCategories(): Promise<category[]> {
+  return categoriesRepository.findMany();
 }
-
-type Categories = {
-  id: number;
-  name: string;
-};
 
 export const categoriesService = { listCategories };
