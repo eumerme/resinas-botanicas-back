@@ -14,11 +14,11 @@ beforeEach(async () => {
 
 const server = supertest(app);
 
-describe("GET /categories", () => {
+describe("GET api/categories", () => {
   it("should respond with status 200 and category list", async () => {
     const category = await createCategory();
 
-    const response = await server.get("/categories");
+    const response = await server.get("/api/categories");
 
     expect(response.status).toEqual(httpStatus.OK);
     expect(response.body).toEqual([
@@ -30,7 +30,7 @@ describe("GET /categories", () => {
   });
 
   it("should respond with an empty array when there are no category", async () => {
-    const response = await server.get("/categories");
+    const response = await server.get("/api/categories");
 
     expect(response.body).toEqual([]);
   });

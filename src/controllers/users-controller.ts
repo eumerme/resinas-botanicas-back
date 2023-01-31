@@ -12,6 +12,9 @@ export async function userSignup(req: Request, res: Response) {
     await usersService.createUser(data);
     return res.sendStatus(httpStatus.CREATED);
   } catch (error) {
+    if (error.name === "ConflictError") {
+      return res.sendStatus(httpStatus.CONFLICT);
+    }
     return res.status(httpStatus.BAD_REQUEST).send(error);
   }
 }
