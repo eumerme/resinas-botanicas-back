@@ -1,10 +1,12 @@
 import { Router } from "express";
-import { userSignup } from "../controllers";
+import { userSignup, userSignin } from "../controllers";
 import { validateBody } from "../middlewares";
-import { signupSchema } from "../schemas";
+import { signinSchema, signupSchema } from "../schemas";
 
 const usersRouter = Router();
 
-usersRouter.post("/signup", validateBody(signupSchema), userSignup);
+usersRouter
+  .post("/signup", validateBody(signupSchema), userSignup)
+  .post("/signin", validateBody(signinSchema), userSignin);
 
 export { usersRouter };
