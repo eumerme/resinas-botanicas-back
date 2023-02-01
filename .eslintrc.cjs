@@ -97,7 +97,7 @@ module.exports = {
           },
           {
             from: ["services"],
-            allow: ["repositories"],
+            allow: ["repositories", "config"],
           },
           {
             from: ["routers"],

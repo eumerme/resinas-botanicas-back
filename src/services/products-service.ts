@@ -1,42 +1,23 @@
+import { product } from "@prisma/client";
 import { notFoundError } from "../errors";
-import * as productsRepository from "../repositories";
+import { categoriesRepository, ProductDetail, productsRepository } from "../repositories";
 
-export async function listProducts(): Promise<LatestProducts[]> {
-  const products = await productsRepository.findLatestProducts();
-
-  return products.map((p) => ({
-    id: p.id,
-    name: p.name,
-    image: p.mainImage,
-    price: p.price,
-    inStock: p.inStock,
-  }));
+async function listProducts(): Promise<product[]> {
+  return productsRepository.findLatestProducts();
 }
 
-export async function listProductById(id: number): Promise<ProductDetailResponse> {
+async function listProductById(id: number): Promise<ProductDetail> {
   const product = await productsRepository.findOne(id);
-
   if (!product) throw notFoundError();
 
-  return {
-    id: product.id,
-    name: product.name,
-    image: product.mainImage,
-    description: product.description,
-    category: product.category.name,
-    price: product.price,
-    inStock: product.inStock,
-  };
+  return product;
 }
 
-type ProductDetailResponse = {
-  id: number;
-  name: string;
-  image: string;
-  description: string;
-  category: string;
-  price: number;
-  inStock: number;
-};
+async function listProductsByCategoryId(id: number): Promise<product[]> {
+  const categoryExists = await categoriesRepository.findById(id);
+  if (!categoryExists) throw notFoundError();
 
-type LatestProducts = Omit<ProductDetailResponse, "description" | "category">;
+  return productsRepository.findProductsByCategoryId(id);
+}
+
+export const productsService = { listProducts, listProductById, listProductsByCategoryId };

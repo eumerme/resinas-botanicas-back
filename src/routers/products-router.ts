@@ -1,8 +1,13 @@
 import { Router } from "express";
-import { getProductById, getProducts } from "../controllers";
+import { getProductById, getProducts, getProductsByCategory } from "../controllers";
+import { validateParams } from "../middlewares";
+import { categoryParams } from "../schemas/categories-schema";
 
 const productsRouter = Router();
 
-productsRouter.get("/home", getProducts).get("/:id", getProductById);
+productsRouter
+  .get("/home", getProducts)
+  .get("/:id", getProductById)
+  .get("/category/:id", validateParams(categoryParams), getProductsByCategory);
 
 export { productsRouter };

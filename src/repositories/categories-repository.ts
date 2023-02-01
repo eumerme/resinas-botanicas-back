@@ -1,18 +1,14 @@
+import { category } from "@prisma/client";
 import { prisma } from "../config";
 
-export async function findMany() {
+export async function findMany(): Promise<category[]> {
   return prisma.category.findMany();
 }
 
-export async function findById(id: number) {
+export async function findById(id: number): Promise<category> {
   return prisma.category.findUnique({
     where: { id },
   });
 }
 
-export async function findProductsByCategoryId(id: number) {
-  return prisma.category.findFirst({
-    where: { id },
-    include: { product: true },
-  });
-}
+export const categoriesRepository = { findMany, findById };
