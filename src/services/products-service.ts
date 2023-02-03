@@ -2,7 +2,7 @@ import { product } from "@prisma/client";
 import { notFoundError } from "../errors";
 import { categoriesRepository, ProductDetail, productsRepository } from "../repositories";
 
-async function listProducts(): Promise<product[]> {
+async function listLatestProducts(): Promise<product[]> {
   return productsRepository.findLatestProducts();
 }
 
@@ -20,4 +20,4 @@ async function listProductsByCategoryId(id: number): Promise<product[]> {
   return productsRepository.findProductsByCategoryId(id);
 }
 
-export const productsService = { listProducts, listProductById, listProductsByCategoryId };
+export const productsService = { listLatestProducts, listProductById, listProductsByCategoryId };
