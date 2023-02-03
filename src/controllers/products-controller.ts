@@ -4,7 +4,7 @@ import { productsService } from "../services";
 
 export async function getProducts(req: Request, res: Response) {
   try {
-    const products = await productsService.listProducts();
+    const products = await productsService.listLatestProducts();
 
     return res.status(httpStatus.OK).send(products);
   } catch (error) {
@@ -33,7 +33,6 @@ export async function getProductsByCategory(req: Request, res: Response) {
   const { id } = req.params;
 
   if (!id || isNaN(Number(id))) return res.sendStatus(httpStatus.BAD_REQUEST);
-  //TODO repetido, adicionar ambos nos testes
 
   try {
     const products = await productsService.listProductsByCategoryId(Number(id));

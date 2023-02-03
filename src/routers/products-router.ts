@@ -6,7 +6,7 @@ import { categoryParams } from "../schemas/categories-schema";
 const productsRouter = Router();
 
 productsRouter
-  .get("/home", getProducts)
+  .get("/latest", getProducts)
   .get("/:id", getProductById)
   .get("/category/:id", validateParams(categoryParams), getProductsByCategory);
 
