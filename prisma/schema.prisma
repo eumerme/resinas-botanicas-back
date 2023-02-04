@@ -16,62 +16,28 @@ model user {
   email     String   @unique @db.VarChar(255)
   password  String   @db.VarChar(255)
   cpf       String   @db.VarChar(255)
-  birthday  DateTime
   phone     String   @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   session session[]
-  order   order[]
 }
 
 model session {
   id        Int      @id @default(autoincrement())
   userId    Int
   token     String
-  active    Boolean  @default(true) //TODO
+  active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   user user @relation(fields: [userId], references: [id])
 }
 
-model shipmentAddress {
-  id            Int      @id @default(autoincrement())
-  cep           String   @db.VarChar(255)
-  street        String   @db.VarChar(255)
-  city          String   @db.VarChar(255)
-  state         String   @db.VarChar(255)
-  number        String   @db.VarChar(255)
-  neighborhood  String   @db.VarChar(255)
-  addressDetail String?  @db.VarChar(255)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  order order[]
-}
-
-model order {
-  id                Int      @id @default(autoincrement())
-  userId            Int
-  shipmentAddressId Int
-  totalPrice        Int
-  paymentType       String
-  status            String
-  sentAt            DateTime
-  receivedAt        DateTime
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
-  user            user            @relation(fields: [userId], references: [id])
-  shipmentAddress shipmentAddress @relation(fields: [shipmentAddressId], references: [id])
-  productOrder    productOrder[]
-}
-
 model category {
   id        Int      @id @default(autoincrement())
   name      String   @unique
-  image     String   @unique //TODO
+  image     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -89,9 +55,8 @@ model product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  category     category       @relation(fields: [categoryId], references: [id])
-  image        image[]
-  productOrder productOrder[]
+  category category @relation(fields: [categoryId], references: [id])
+  image    image[]
 }
 
 model image {
@@ -101,17 +66,5 @@ model image {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  product product @relation(fields: [productId], references: [id])
-}
-
-model productOrder {
-  id        Int      @id @default(autoincrement())
-  orderId   Int
-  productId Int
-  quantity  Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  order   order   @relation(fields: [orderId], references: [id])
   product product @relation(fields: [productId], references: [id])
 }

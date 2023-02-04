@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { createCheckout } from "../controllers";
 import { validateBody } from "../middlewares";
-import { cartItemSchema } from "../schemas/checkout-schema";
+import { cartItemSchema } from "../schemas";
 
 const stripeRouter = Router();
 

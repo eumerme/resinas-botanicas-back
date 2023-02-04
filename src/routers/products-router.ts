@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getProductById, getProducts, getProductsByCategory } from "../controllers";
 import { validateParams } from "../middlewares";
-import { categoryParams } from "../schemas/categories-schema";
+import { categoryParams } from "../schemas";
 
 const productsRouter = Router();
 
