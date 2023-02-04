@@ -16,21 +16,21 @@ beforeEach(async () => {
 
 const server = supertest(app);
 
-describe("POST /api/users/signup", () => {
+describe("POST /users/signup", () => {
   it("should respond with status 422 when body is not given", async () => {
-    const response = await server.post("/api/users/signup");
+    const response = await server.post("/users/signup");
 
     expect(response.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
   });
 
   it("should respond with status 422 when body is not valid", async () => {
-    const response = await server.post("/api/users/signup").send(invalidBody);
+    const response = await server.post("/users/signup").send(invalidBody);
 
     expect(response.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
   });
 
   it("should respond with status 422 when password and confirm password doesn't match", async () => {
-    const response = await server.post("/api/users/signup").send(invalidBody);
+    const response = await server.post("/users/signup").send(invalidBody);
 
     expect(response.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
   });
@@ -39,13 +39,13 @@ describe("POST /api/users/signup", () => {
     it("should respond with status 409 when there is an user with given email", async () => {
       await createUser(validSignupBody);
 
-      const response = await server.post("/api/users/signup").send(validSignupBody);
+      const response = await server.post("/users/signup").send(validSignupBody);
 
       expect(response.status).toBe(httpStatus.CONFLICT);
     });
 
     it("should respond with status 201 when given email is unique", async () => {
-      const response = await server.post("/api/users/signup").send(validSignupBody);
+      const response = await server.post("/users/signup").send(validSignupBody);
 
       expect(response.status).toBe(httpStatus.CREATED);
     });
@@ -53,7 +53,7 @@ describe("POST /api/users/signup", () => {
     it("should save user on db", async () => {
       const beforeCount = await prisma.user.count();
 
-      await server.post("/api/users/signup").send(validSignupBody);
+      await server.post("/users/signup").send(validSignupBody);
 
       const afterCount = await prisma.user.count();
 
@@ -63,22 +63,22 @@ describe("POST /api/users/signup", () => {
   });
 });
 
-describe("POST /api/users/signin", () => {
+describe("POST /users/signin", () => {
   it("should respond with status 422 when body is not given", async () => {
-    const response = await server.post("/api/users/signin");
+    const response = await server.post("/users/signin");
 
     expect(response.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
   });
 
   it("should respond with status 422 when body is not valid", async () => {
-    const response = await server.post("/api/users/signin").send(invalidBody);
+    const response = await server.post("/users/signin").send(invalidBody);
 
     expect(response.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
   });
 
   describe("when body is valid", () => {
     it("should respond with status 401 if there is no user for given email", async () => {
-      const response = await server.post("/api/users/signin").send(validSigninBody);
+      const response = await server.post("/users/signin").send(validSigninBody);
 
       expect(response.status).toBe(httpStatus.UNAUTHORIZED);
     });
@@ -86,7 +86,7 @@ describe("POST /api/users/signin", () => {
     it("should respond with status 401 if there is a user for given email but password is not correct", async () => {
       await createUser(validSigninBody);
 
-      const response = await server.post("/api/users/signin").send({
+      const response = await server.post("/users/signin").send({
         ...validSigninBody,
         password: "12312312",
       });
@@ -99,7 +99,7 @@ describe("POST /api/users/signin", () => {
         const user = await createUser(validSignupBody);
 
         const response = await server
-          .post("/api/users/signin")
+          .post("/users/signin")
           .send({ email: validSignupBody.email, password: validSignupBody.password });
 
         expect(response.status).toBe(httpStatus.OK);

@@ -8,7 +8,6 @@ export const signupSchema = Joi.object<signup>({
   password: Joi.string().min(8).trim().required(),
   confirmPassword: Joi.ref("password"),
   cpf: Joi.string().length(11).custom(joiCpfValidation).required(),
-  birthday: Joi.string().isoDate().required(),
   phone: Joi.string().min(8).max(11).custom(joiPhoneValidation).required(),
 }).with("password", "confirmPassword");
 
