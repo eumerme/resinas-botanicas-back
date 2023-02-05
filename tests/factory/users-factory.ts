@@ -32,5 +32,5 @@ export const validSignupBody = {
 
 export const invalidSigninBody = {
   email: "teste2@hotmail.com",
-  password: "123456789",
+  password: "12345678",
 };
