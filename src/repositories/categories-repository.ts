@@ -5,10 +5,10 @@ export async function findMany(): Promise<category[]> {
   return prisma.category.findMany();
 }
 
-export async function findById(id: number): Promise<category> {
+export async function findByName(name: string): Promise<category> {
   return prisma.category.findUnique({
-    where: { id },
+    where: { name },
   });
 }
 
-export const categoriesRepository = { findMany, findById };
+export const categoriesRepository = { findMany, findByName };
