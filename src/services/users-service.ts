@@ -38,7 +38,9 @@ async function signin(params: SignInParams): Promise<SignInResult> {
 }
 
 async function findUser(email: string): Promise<user> {
-  return usersRepository.findByEmail(email);
+  const user = await usersRepository.findByEmail(email);
+  if (!user) throw unauthorizedError(message);
+  return user;
 }
 
 async function generateSession(userId: number): Promise<string> {
@@ -46,7 +48,6 @@ async function generateSession(userId: number): Promise<string> {
   await usersRepository.createSession({
     token,
     userId,
-    active: true, //TODO retirar quando atualizar o prisma schema
   });
 
   return token;
@@ -55,4 +56,4 @@ async function generateSession(userId: number): Promise<string> {
 export type SignInParams = Pick<user, "email" | "password">;
 type SignInResult = Pick<user, "email" | "name"> & Pick<session, "userId" | "token">;
 
-export const usersService = { signup, signin };
+export const usersService = { signup, signin, findUser };

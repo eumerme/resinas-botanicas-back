@@ -29,3 +29,15 @@ export async function userSignin(req: Request, res: Response) {
     return res.status(httpStatus.UNAUTHORIZED).send(error);
   }
 }
+
+export async function userProfile(req: Request, res: Response) {
+  const { email } = req.params as Pick<SignInParams, "email">;
+
+  try {
+    const user = await usersService.findUser(email);
+    delete user.password;
+    return res.status(httpStatus.OK).send(user);
+  } catch (error) {
+    return res.status(httpStatus.UNAUTHORIZED).send(error);
+  }
+}
