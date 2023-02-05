@@ -13,11 +13,11 @@ async function listProductById(id: number): Promise<ProductDetail> {
   return product;
 }
 
-async function listProductsByCategoryId(id: number): Promise<product[]> {
-  const categoryExists = await categoriesRepository.findById(id);
+async function listProductsByCategoryName(name: string): Promise<product[]> {
+  const categoryExists = await categoriesRepository.findByName(name);
   if (!categoryExists) throw notFoundError();
 
-  return productsRepository.findProductsByCategoryId(id);
+  return productsRepository.findProductsByCategoryName(name);
 }
 
-export const productsService = { listLatestProducts, listProductById, listProductsByCategoryId };
+export const productsService = { listLatestProducts, listProductById, listProductsByCategoryName };

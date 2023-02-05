@@ -7,7 +7,7 @@ async function findLatestProducts(): Promise<product[]> {
       createdAt: "desc",
     },
     skip: 0,
-    take: 10,
+    take: 6,
   });
 }
 
@@ -18,9 +18,9 @@ async function findOne(id: number): Promise<ProductDetail> {
   });
 }
 
-async function findProductsByCategoryId(id: number): Promise<product[]> {
+async function findProductsByCategoryName(name: string): Promise<product[]> {
   return prisma.product.findMany({
-    where: { categoryId: id },
+    where: { categoryName: name },
   });
 }
 
@@ -28,4 +28,4 @@ export type ProductDetail = product & {
   category: category;
 };
 
-export const productsRepository = { findLatestProducts, findOne, findProductsByCategoryId };
+export const productsRepository = { findLatestProducts, findOne, findProductsByCategoryName };

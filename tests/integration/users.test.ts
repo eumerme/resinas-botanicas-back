@@ -79,7 +79,7 @@ describe("POST /users/signin", () => {
 
   describe("when body is valid", () => {
     it("should respond with status 401 if there is no user for given email", async () => {
-      const response = await server.post("/api/users/signin").send(invalidSigninBody);
+      const response = await server.post("/users/signin").send(invalidSigninBody);
 
       expect(response.status).toBe(httpStatus.UNAUTHORIZED);
     });
@@ -87,7 +87,7 @@ describe("POST /users/signin", () => {
     it("should respond with status 401 if there is a user for given email but password is not correct", async () => {
       await createUser(invalidSigninBody);
 
-      const response = await server.post("/api/users/signin").send({
+      const response = await server.post("/users/signin").send({
         ...invalidSigninBody,
         password: "12312312",
       });

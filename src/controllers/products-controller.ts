@@ -30,12 +30,10 @@ export async function getProductById(req: Request, res: Response) {
 }
 
 export async function getProductsByCategory(req: Request, res: Response) {
-  const { id } = req.params;
-
-  if (!id || isNaN(Number(id))) return res.sendStatus(httpStatus.BAD_REQUEST);
+  const { name } = req.params;
 
   try {
-    const products = await productsService.listProductsByCategoryId(Number(id));
+    const products = await productsService.listProductsByCategoryName(name);
 
     return res.status(httpStatus.OK).send(products);
   } catch (error) {

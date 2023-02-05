@@ -17,7 +17,7 @@ const server = supertest(app);
 describe("GET /products/latest", () => {
   it("should respond with status 200 and the 10 most recent products", async () => {
     const category = await createCategory();
-    const product = await createProduct(category.id);
+    const product = await createProduct(category.name);
 
     const response = await server.get("/products/latest");
 
@@ -30,7 +30,7 @@ describe("GET /products/latest", () => {
         mainImage: product.mainImage,
         price: product.price,
         inStock: product.inStock,
-        categoryId: category.id,
+        categoryName: category.name,
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       },
@@ -47,7 +47,7 @@ describe("GET /products/latest", () => {
 describe("GET /products/:id", () => {
   it("should respond with status 200 and product detail", async () => {
     const category = await createCategory();
-    const product = await createProduct(category.id);
+    const product = await createProduct(category.name);
 
     const response = await server.get(`/products/${product.id}`);
 
@@ -59,7 +59,7 @@ describe("GET /products/:id", () => {
       mainImage: product.mainImage,
       price: product.price,
       inStock: product.inStock,
-      categoryId: category.id,
+      categoryName: category.name,
       createdAt: expect.any(String),
       updatedAt: expect.any(String),
       category: {
@@ -82,9 +82,9 @@ describe("GET /products/:id", () => {
 describe("GET /products/category/:id", () => {
   it("should respond with status 200 and the products of the chosen category", async () => {
     const category = await createCategory();
-    const product = await createProduct(category.id);
+    const product = await createProduct(category.name);
 
-    const response = await server.get(`/products/category/${category.id}`);
+    const response = await server.get(`/products/category/${category.name}`);
 
     expect(response.status).toEqual(httpStatus.OK);
     expect(response.body).toEqual([
@@ -95,7 +95,7 @@ describe("GET /products/category/:id", () => {
         mainImage: product.mainImage,
         price: product.price,
         inStock: product.inStock,
-        categoryId: category.id,
+        categoryName: category.name,
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       },
@@ -105,7 +105,7 @@ describe("GET /products/category/:id", () => {
   it("should respond with an empty array when there is no product of the chosen category", async () => {
     const category = await createCategory();
 
-    const response = await server.get(`/products/category/${category.id}`);
+    const response = await server.get(`/products/category/${category.name}`);
 
     expect(response.body).toEqual([]);
   });

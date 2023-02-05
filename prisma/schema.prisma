@@ -45,17 +45,17 @@ model category {
 }
 
 model product {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
-  mainImage   String   @unique
-  description String
-  price       Int
-  inStock     Int
-  categoryId  Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  mainImage    String   @unique
+  description  String
+  price        Int
+  inStock      Int
+  categoryName String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  category category @relation(fields: [categoryId], references: [id])
+  category category @relation(fields: [categoryName], references: [name])
   image    image[]
 }
 

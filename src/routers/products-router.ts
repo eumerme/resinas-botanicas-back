@@ -8,6 +8,6 @@ const productsRouter = Router();
 productsRouter
   .get("/latest", getProducts)
   .get("/:id", getProductById)
-  .get("/category/:id", validateParams(categoryParams), getProductsByCategory);
+  .get("/category/:name", validateParams(categoryParams), getProductsByCategory);
 
 export { productsRouter };
