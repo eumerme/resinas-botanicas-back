@@ -14,17 +14,18 @@ beforeEach(async () => {
 
 const server = supertest(app);
 
-describe("GET api/categories", () => {
+describe("GET /categories", () => {
   it("should respond with status 200 and category list", async () => {
     const category = await createCategory();
 
-    const response = await server.get("/api/categories");
+    const response = await server.get("/categories");
 
     expect(response.status).toEqual(httpStatus.OK);
     expect(response.body).toEqual([
       {
         id: expect.any(Number),
         name: category.name,
+        image: category.image,
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       },
@@ -32,7 +33,7 @@ describe("GET api/categories", () => {
   });
 
   it("should respond with an empty array when there are no category", async () => {
-    const response = await server.get("/api/categories");
+    const response = await server.get("/categories");
 
     expect(response.body).toEqual([]);
   });

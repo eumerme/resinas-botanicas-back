@@ -31,7 +31,7 @@ export async function userSignin(req: Request, res: Response) {
 }
 
 export async function userProfile(req: Request, res: Response) {
-  const { email } = req.params as Pick<SignInParams, "email">;
+  const { email } = req.params;
 
   try {
     const user = await usersService.findUser(email);

@@ -14,7 +14,6 @@ export async function createUser(params: Partial<user> = {}): Promise<user> {
       name: params.name || faker.name.fullName(),
       password: hashedPassword,
       cpf: params.cpf || generateCPF(),
-      birthday: params.birthday || faker.date.past(),
       phone: params.phone || faker.phone.number("##9########"),
     },
   });
@@ -25,14 +24,13 @@ export const invalidBody = { [faker.lorem.word()]: faker.lorem.word() };
 export const validSignupBody = {
   email: "teste@hotmail.com",
   name: "teste",
-  birthday: faker.date.past(),
   phone: "11908664535",
   cpf: generateCPF(),
   password: "12345678",
   confirmPassword: "12345678",
 };
 
-export const validSigninBody = {
+export const invalidSigninBody = {
   email: "teste2@hotmail.com",
   password: "123456789",
 };

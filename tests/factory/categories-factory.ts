@@ -6,6 +6,7 @@ export async function createCategory(): Promise<category> {
   return prisma.category.create({
     data: {
       name: faker.name.firstName(),
+      image: faker.image.imageUrl(),
     },
   });
 }

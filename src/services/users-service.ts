@@ -7,7 +7,7 @@ import { usersRepository } from "../repositories";
 const message = "Email ou senha incorretos";
 
 async function signup(data: user): Promise<user> {
-  const userWithSameEmail = await findUser(data.email);
+  const userWithSameEmail = await usersRepository.findByEmail(data.email);
   if (userWithSameEmail) throw conflictError("Email já cadastrado");
 
   const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -22,7 +22,6 @@ async function signin(params: SignInParams): Promise<SignInResult> {
   const { email, password } = params;
 
   const user = await findUser(email);
-  if (!user) throw unauthorizedError(message);
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) throw unauthorizedError(message);
