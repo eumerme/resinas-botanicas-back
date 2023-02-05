@@ -17,7 +17,6 @@ function validate(schema: ObjectSchema, type: "body" | "params") {
     });
 
     if (error) {
-      console.log(error);
       const message = error.details.map((detail) => detail.message).join(",");
       return res.status(httpStatus.UNPROCESSABLE_ENTITY).send({ message });
     } else {

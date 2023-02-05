@@ -30,7 +30,7 @@ export const validSignupBody = {
   confirmPassword: "12345678",
 };
 
-export const validSigninBody = {
+export const invalidSigninBody = {
   email: "teste2@hotmail.com",
   password: "12345678",
 };

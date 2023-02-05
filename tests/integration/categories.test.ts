@@ -14,7 +14,7 @@ beforeEach(async () => {
 
 const server = supertest(app);
 
-describe("GET categories", () => {
+describe("GET /categories", () => {
   it("should respond with status 200 and category list", async () => {
     const category = await createCategory();
 
