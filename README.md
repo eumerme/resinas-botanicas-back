@@ -2,6 +2,12 @@
 
 Resinas Botânicas backend, a test ecommerce application, still under construction. To use the frontend, see [this repository](https://github.com/eumerme/resinas-botanicas-front) and follow the instructions in README.md
 
+[About](#about) |
+[Technologies](#technologies) |
+[Installation Guide](#installation-guide) |
+[How to Run](#how-to-run) |
+[API Endpoints](#api-endpoints)
+
 ## About
 
 This project is a simple application that satisfies the needs of Resinas Botânicas virtual store (@resinasbotanicas on instagram)
@@ -35,23 +41,13 @@ Nodejs, express, postgres, prisma, joi, jsonwebtoken, bcrypt, stripe, typescript
 
 ## API Endpoints
 
-| HTTP Verbs | Endpoints                | Action                                                                    |
-| ---------- | ------------------------ | ------------------------------------------------------------------------- |
-| POST       | /users/signup            | Register user                                                             |
-| POST       | /users/signin            | Login user                                                                |
-| GET        | /users/profile/:email    | List user information                                                     |
-| GET        | /categories              | List categories                                                           |
-| GET        | /products/latest         | List the 6 most recent products                                           |
-| GET        | /products/:id            | List the product based on its id                                          |
-| GET        | /products/category/:name | List all products in the selected category                                |
-| POST       | /stripe/checkout-session | Create a test checkout with stipe. See more information [here](#checkout) |
-
-### Checkout
-
-Use any of these test cards to simulate a payment.
-
-| Payment                 | Card number         |
-| ----------------------- | ------------------- |
-| Succeeds                | 4242 4242 4242 4242 |
-| Requires authentication | 4000 0025 0000 3155 |
-| Declined                | 4000 0000 0000 9995 |
+| HTTP Verbs | Endpoints                | Action                                     |
+| ---------- | ------------------------ | ------------------------------------------ |
+| POST       | /users/signup            | Register user                              |
+| POST       | /users/signin            | Login user                                 |
+| GET        | /users/profile/:email    | List user information                      |
+| GET        | /categories              | List categories                            |
+| GET        | /products/latest         | List the 6 most recent products            |
+| GET        | /products/:id            | List the product based on its id           |
+| GET        | /products/category/:name | List all products in the selected category |
+| POST       | /stripe/checkout-session | Create a test checkout with stipe)         |
