@@ -10,7 +10,7 @@ Resinas Botânicas Backend is a test ecommerce application currently under devel
 
 ## About
 
-This project is a simple application that meets the needs of Resinas Botânicas virtual store (@resinasbotanicas on Instagram).
+This project is a simple application that meets the needs of Resinas Botânicas virtual store ([@resinasbotanicas](https://www.instagram.com/resinasbotanicas/) on Instagram).
 
 ## Technologies
 
@@ -47,14 +47,13 @@ To install and run the project on your local machine, please follow the steps be
 
 The following API endpoints are available in the project:
 
-|
-HTTP Method | Endpoint | Description |
-| ---------- | ------------------------ | ------------------------------------------------------- |
-| POST | /users/signup | Register a new user |
-| POST | /users/signin | Login an existing user |
-| GET | /users/profile/:email | Get the user information for a given email address |
-| GET | /categories | List all available product categories |
-| GET | /products/latest | List the six most recently added products |
-| GET | /products/:id | Get the product information for a given product ID |
-| GET | /products/category/:name | List all products in a given category |
-| POST | /stripe/checkout-session | Create a test checkout session using Stripe payment API |
+| HTTP Method | Endpoint                 | Description                                             |
+| ----------- | ------------------------ | ------------------------------------------------------- |
+| POST        | /users/signup            | Register a new user                                     |
+| POST        | /users/signin            | Login an existing user                                  |
+| GET         | /users/profile/:email    | Get the user information for a given email address      |
+| GET         | /categories              | List all available product categories                   |
+| GET         | /products/latest         | List the six most recently added products               |
+| GET         | /products/:id            | Get the product information for a given product ID      |
+| GET         | /products/category/:name | List all products in a given category                   |
+| POST        | /stripe/checkout-session | Create a test checkout session using Stripe payment API |
