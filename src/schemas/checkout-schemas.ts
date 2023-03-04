@@ -9,7 +9,7 @@ export const cartItemSchema = Joi.object({
     price: Joi.number().positive().required(),
     inStock: Joi.number().positive().required(),
     quantity: Joi.number().positive().required(),
-    categoryId: Joi.number().positive().required(),
+    categoryName: Joi.string().trim().required(),
     createdAt: Joi.date().required(),
     updatedAt: Joi.date().required(),
     category: Joi.object({
